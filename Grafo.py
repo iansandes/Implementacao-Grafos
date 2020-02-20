@@ -1,5 +1,6 @@
 class Grafo(object):
-    """ Implementação de um grafo co lista de ajacencias"""
+
+    """ Implementação de um grafo com lista de ajacencias"""
 
     def __init__(self):
         self.grafo = {}
@@ -16,14 +17,3 @@ class Grafo(object):
 
     def __str__(self):
         return f' {self.grafo}'
-
-
-if __name__ == '__main__':
-    g1 = Grafo()
-    g1.adicionar_vertice('a')
-    g1.adicionar_vertice('b')
-    g1.adicionar_vertice('c')
-    g1.adicionar_aresta('b', 'c', 5)
-    print(g1)
-
-    
