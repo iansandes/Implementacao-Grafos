@@ -14,6 +14,11 @@ class Grafo(object):
             if vertice == origem:
                 adjacencias = self.grafo[vertice]
                 adjacencias[destino] = peso
-
+    
+    def get_adjacentes(self, vertice):
+        if vertice in self.grafo:
+            adjacencia = self.grafo[vertice].keys()
+            return adjacencia
+            
     def __str__(self):
         return f' {self.grafo}'

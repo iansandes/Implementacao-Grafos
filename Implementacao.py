@@ -14,3 +14,4 @@ grafo.adicionar_aresta('a', 'c', 4)
 grafo.adicionar_aresta('c', 'a', 4)
 
 print(grafo)
+print(grafo.get_adjacentes('a'))
