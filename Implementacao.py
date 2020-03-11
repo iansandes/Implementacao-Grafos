@@ -7,8 +7,8 @@ grafo.adicionar_vertice('a')
 grafo.adicionar_vertice('b')
 grafo.adicionar_vertice('c')
 #grafo.adicionar_vertice('d')
-g
-rafo.adicionar_aresta('b', 'c', 5)
+
+grafo.adicionar_aresta('b', 'c', 5)
 grafo.adicionar_aresta('c', 'b', 5)
 grafo.adicionar_aresta('a', 'b', 3)
 grafo.adicionar_aresta('b', 'a', 3)
