@@ -16,9 +16,26 @@ class Grafo(object):
                 adjacencias[destino] = peso
     
     def get_adjacentes(self, vertice):
+        vertices = []
         if vertice in self.grafo:
             adjacencia = self.grafo[vertice].keys()
-            return adjacencia
+            for vertice in adjacencia:
+                vertices.append(vertice)
+            return vertices
+
+    def eh_completo(self):
+        qtd_vertices = len(self.grafo)        
+        calculo_grafo_completo = (qtd_vertices * (qtd_vertices - 1))/2
+        
+        if qtd_vertices == calculo_grafo_completo:
+            return True
+        
+        return False
+            
+            
+            
+            
+
             
     def __str__(self):
         return f' {self.grafo}'
