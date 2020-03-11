@@ -55,18 +55,24 @@ class Grafo(object):
             grau += 1
         return grau
 
-    def dfs(self): #busca em profundidade
-        def dfs_recursiva(self, vertice):
+    def ehConexo(self):
+        conexo = 0
+        def busca_profundidade(self, vertice):
             visitados.add(vertice)
             for vizinho in self.grafo[vertice]:
                 if vizinho not in visitados:
-                    dfs_recursiva(self, vizinho)
+                    busca_profundidade(self, vizinho)
 
         visitados = set()
         for vertice in self.grafo:
             if not vertice in visitados:
-                dfs_recursiva(self, vertice)
-        return visitados
+                busca_profundidade(self, vertice)
+                conexo += 1
+        if conexo == 1:
+            return True
+        else:
+            return False
+
 
 
     def __str__(self):
