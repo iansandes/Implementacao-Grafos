@@ -24,10 +24,15 @@ class Grafo(object):
             return vertices
 
     def eh_completo(self):
-        qtd_vertices = len(self.grafo)        
+        
+        qtd_arestas = 0
+        qtd_vertices = len(self.grafo)
+        for aresta in self.grafo.values():
+            qtd_arestas += len(aresta)
+                   
         calculo_grafo_completo = (qtd_vertices * (qtd_vertices - 1))/2
         
-        if qtd_vertices == calculo_grafo_completo:
+        if (qtd_arestas/2) == calculo_grafo_completo:
             return True
         
         return False
