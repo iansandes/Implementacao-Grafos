@@ -23,10 +23,14 @@ class Grafo(object):
                 vertices.append(vertice)
             return vertices
 
-    def ehRegular(self):
+    def obter_grau(self, vertice):
+        grau = len(self.get_adjacentes(vertice))
+        return grau
+
+    def eh_regular(self):
         count = 0
         for vertice in self.grafo.keys():
-            grauAtual = len(self.get_adjacentes(vertice))
+            grauAtual = self.obter_grau(vertice)
             if(count > 0 and (grauAtual != grauAntigo)):
                 return False
             grauAntigo = grauAtual
@@ -49,13 +53,16 @@ class Grafo(object):
         
         return False
 
-    def grau(self, vertice):
-        grau = 0
-        for grau in range(len(self.get_adjacentes(vertice))):
-            grau += 1
-        return grau
 
-    def ehConexo(self):
+    def eh_completo_v2(self):
+        qtd_vertices = len(self.grafo.keys())
+        for vertice in self.grafo:
+            if (self.obter_grau(vertice) != (qtd_vertices - 1)):
+                return False
+        return True
+
+
+    def eh_conexo(self):
         conexo = 0
         def busca_profundidade(self, vertice):
             visitados.add(vertice)
@@ -72,8 +79,6 @@ class Grafo(object):
             return True
         else:
             return False
-
-
 
     def __str__(self):
         return f' {self.grafo}'
