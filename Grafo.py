@@ -22,7 +22,7 @@ class Grafo(object):
             for vertice in adjacencia:
                 vertices.append(vertice)
             return vertices
-
+            
     def obter_grau(self, vertice):
         grau = len(self.get_adjacentes(vertice))
         return grau
@@ -79,6 +79,46 @@ class Grafo(object):
             return True
         else:
             return False
+
+
+    def dijkstra(self, inicial, final):
+        menores_distancias = {}
+        antecessores = {}
+        vertices_nao_visitados = self.grafo
+        infinito = float('inf')
+        caminho = []
+
+        for vertice in vertices_nao_visitados:
+            menores_distancias[vertice] = infinito
+        menores_distancias[inicial] = 0
+
+        while vertices_nao_visitados:
+            min_vertice = None
+            for vertice in vertices_nao_visitados:
+                if min_vertice is None:
+                    min_vertice = vertice
+                elif menores_distancias[vertice] < menores_distancias[min_vertice]:
+                    min_vertice = vertice
+
+            for vertice_adjacentes, peso in self.grafo[min_vertice].items():
+                if peso + menores_distancias[min_vertice] < menores_distancias[vertice_adjacentes]:
+                    menores_distancias[vertice_adjacentes] = peso + menores_distancias[min_vertice]
+                    antecessores[vertice_adjacentes] = min_vertice
+            vertices_nao_visitados.pop(min_vertice)
+
+        vertice_atual = final
+        while vertice_atual != inicial:
+            try:
+                caminho.insert(0, vertice_atual)
+                vertice_atual = antecessores[vertice_atual]
+            except KeyError:
+                print('caminho inacessível')
+                break
+        caminho.insert(0,inicial)
+        if menores_distancias[final] != infinito:
+            print('A menor distancia é ' + str(menores_distancias[final]))
+            print('E o caminho é ' + str(caminho))
+
 
     def __str__(self):
         return f' {self.grafo}'
