@@ -1,4 +1,7 @@
-class Grafo(object):
+from collections import defaultdict
+import heapq
+
+class Grafo:
 
     """ Implementação de um grafo com lista de ajacencias"""
 
@@ -27,6 +30,13 @@ class Grafo(object):
         grau = len(self.get_adjacentes(vertice))
         return grau
 
+    def obter_grau_entrada(self, vertice):
+        count = 0
+        for adj in self.grafo.values():
+            if vertice in adj:
+                count += 1
+        return count
+
     def eh_regular(self):
         count = 0
         for vertice in self.grafo.keys():
@@ -43,8 +53,6 @@ class Grafo(object):
         qtd_vertices = len(self.grafo)
         for aresta in self.grafo.values():
             qtd_arestas += len(aresta)
-
-
                    
         calculo_grafo_completo = (qtd_vertices * (qtd_vertices - 1))/2
         
@@ -84,7 +92,7 @@ class Grafo(object):
     def dijkstra(self, inicial, final):
         menores_distancias = {}
         antecessores = {}
-        vertices_nao_visitados = self.grafo
+        vertices_nao_visitados = self.grafo.copy()
         infinito = float('inf')
         caminho = []
 
@@ -118,6 +126,59 @@ class Grafo(object):
         if menores_distancias[final] != infinito:
             print('A menor distancia é ' + str(menores_distancias[final]))
             print('E o caminho é ' + str(caminho))
+
+    def prim(self, raiz):
+        arvore_minima = defaultdict(set)
+        visitados = set([raiz])
+        arestas = [
+            (peso, raiz, vizinho)
+            for vizinho, peso in self.grafo[raiz].items()
+        ]
+        heapq.heapify(arestas)
+        while arestas:
+            peso, frm, vizinho = heapq.heappop(arestas)
+            if vizinho not in visitados:
+                visitados.add(vizinho)
+                arvore_minima[frm].add(vizinho)
+                for proximo, peso in self.grafo[vizinho].items():
+                    if proximo not in visitados:
+                        heapq.heappush(arestas, (peso, vizinho, proximo))
+        return dict(arvore_minima)
+
+
+    def remover_vertice(self, vertice):
+        if vertice in self.grafo.keys():
+            del self.grafo[vertice]
+
+        for vertices_adj in self.grafo.values():
+            if vertice in vertices_adj:
+                del vertices_adj[vertice]
+
+
+    def ordenacao_topologica(self):
+        copia = self.grafo.copy()
+        vertices_grau_zero = list()
+        ordem_topologica = list()
+
+        def ordenacao():
+            for vertice in self.grafo.keys():
+                if self.obter_grau_entrada(vertice) == 0:
+                    vertices_grau_zero.append(vertice)
+
+            while vertices_grau_zero:
+                v = vertices_grau_zero.pop(0)
+                ordem_topologica.append(v)
+                self.remover_vertice(v)
+            
+            while self.grafo:
+                ordenacao()
+
+        if len(self.grafo) != 0:
+            ordenacao()
+        
+        self.grafo = copia
+        return ordem_topologica
+
 
 
     def __str__(self):
